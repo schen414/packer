@@ -1,0 +1,36 @@
+{
+  "variables": {
+    "aws_profile": "",
+    "instance_type": "t2.micro",
+    "region": "us-east-1",
+    "source_ami": "",
+    "security_group_ids": "",
+    "subnet_id": "",
+    "ssh_keypair_name": "",
+    "ssh_private_key_file": "",
+    "iam_instance_profile": "",
+    "kms_key_id": "",
+    "vpc_id": ""
+  },
+  "builders": [
+    {
+      "profile": "{{ user `aws_profile` }}",
+      "type": "amazon-ebs",
+      "tags": {
+        "Name": "aws-linux"
+      },
+      "encrypt_boot": true,
+      "kms_key_id": "{{ user `kms_key_id` }}",
+      "ami_name": "aws-linux {{ timestamp }}",
+      "instance_type": "{{ user `instance_type` }}",
+      "region": "{{ user `region` }}",
+      "security_group_ids": "{{ user `security_group_ids` }}",
+      "source_ami": "{{ user `source_ami` }}",
+      "ssh_keypair_name": "{{ user `keypair_name` }}",
+      "ssh_private_key_file": "{{ user `private_key_file` }}",
+      "iam_instance_profile": "{{ user `iam_instance_profile` }}",
+      "vpc_id": "{{ user `vpc_id` }}",
+      "ssh_username": "ec2-user"
+    }
+  ]
+}
