@@ -1,0 +1,4 @@
+{
+  "iso_datastore": "local_datastore",
+  "guest_os_type": "centos7_64Guest"
+}

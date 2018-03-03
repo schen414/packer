@@ -1,0 +1,9 @@
+---
+- name: deploy_proget.yml
+  hosts: all 
+
+  vars_files:
+    - "vars/creds.yml"
+  roles:
+    - common
+    - password

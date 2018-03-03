@@ -1,0 +1,49 @@
+{
+  "variables": {
+    "vcenter_username": "{{env `vcenter_username`}}",
+    "vcenter_password": "{{env `vcenter_password`}}",
+    "ssh_username": "root",
+    "ssh_password": "password"
+  },
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "vcenter_server": "{{env `vcenter_address`}}",
+      "username": "{{user `vcenter_username`}}",
+      "password": "{{user `vcenter_password`}}",
+      "insecure_connection": "true",
+
+      "vm_name": "packer-centos-7-ansible",
+      "host": "{{env `vsphere_host`}}",
+      "datastore": "local_datastore",
+      "resource_pool": "",
+
+      "CPUs": 1,
+      "RAM": 2048,
+      "guest_os_type": "{{user `guest_os_type`}}",
+      "network": "VM Network",
+      "network_adapter": "vmxnet3",
+      "disk_size": "16GB",
+      "iso": "ISO/custom.iso",
+      "iso_datastore": "{{user `iso_datastore`}}",
+      "communicator": "ssh",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_password": "{{user `ssh_password`}}",
+      "convert_to_template": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "ansible/bootstrap.yml",
+      "extra_arguments": [
+        "-v",
+        "--extra-vars", "ansible_user={{user `ssh_username`}} ansible_password={{user `ssh_password`}}",
+        "--vault-password-file", "{{user `vault-password-file`}}"
+      ],
+      "sftp_command": "/usr/libexec/openssh/sftp-server -e"
+    }
+  ]
+}
+

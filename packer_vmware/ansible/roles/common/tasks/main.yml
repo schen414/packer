@@ -1,0 +1,14 @@
+---
+- name: install packages 
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - nano
+    - net-tools
+    - telnet
+    - wget
+    - screen
+    - vim
+...
